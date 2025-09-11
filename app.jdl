@@ -1,0 +1,56 @@
+entity UserPet {
+  name String required maxlength(100),
+  email String required maxlength(100) unique,
+  passwordHash String required maxlength(255),
+  phone String maxlength(20),
+  address String maxlength(255),
+  role UserRole required,
+  createdAt Instant
+}
+
+enum UserRole {
+  OWNER, VET, SHELTER
+}
+
+entity Pet {
+  ownerId Long required,
+  name String required maxlength(100),
+  species String maxlength(50),
+  breed String maxlength(50),
+  age Integer,
+  gender Gender,
+  photoUrl String maxlength(255),
+  createdAt Instant
+}
+
+enum Gender {
+  MALE, FEMALE
+}
+
+entity Appointment {
+  petId Long required,
+  ownerId Long required,
+  vetId Long required,
+  apptTime Instant required,
+  status AppointmentStatus,
+  createdAt Instant
+}
+
+enum AppointmentStatus {
+  PENDING, CONFIRMED, CANCELLED, DONE
+}
+
+entity HealthRecord {
+  petId Long required,
+  vetId Long required,
+  apptId Long required,
+  diagnosis String,
+  treatment String,
+  notes String,
+  createdAt Instant
+}
+
+dto * with mapstruct
+service * with serviceClass
+paginate * with pagination
+filter *
