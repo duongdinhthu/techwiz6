@@ -14,12 +14,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import petcare.domain.UserPet;
 import petcare.repository.UserPetRepository;
 import petcare.service.UserPetQueryService;
 import petcare.service.UserPetService;
 import petcare.service.criteria.UserPetCriteria;
+import petcare.service.dto.LoginRequest;
 import petcare.service.dto.UserPetDTO;
 import petcare.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
@@ -46,10 +49,18 @@ public class UserPetResource {
 
     private final UserPetQueryService userPetQueryService;
 
-    public UserPetResource(UserPetService userPetService, UserPetRepository userPetRepository, UserPetQueryService userPetQueryService) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserPetResource(
+        UserPetService userPetService,
+        UserPetRepository userPetRepository,
+        UserPetQueryService userPetQueryService,
+        PasswordEncoder passwordEncoder
+    ) {
         this.userPetService = userPetService;
         this.userPetRepository = userPetRepository;
         this.userPetQueryService = userPetQueryService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -197,5 +208,29 @@ public class UserPetResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserPetDTO> register(@Valid @RequestBody UserPetDTO userPetDTO) {
+        LOG.debug("REST request to register UserPet : {}", userPetDTO);
+        UserPetDTO result = userPetService.register(userPetDTO);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+        Optional<UserPet> userOpt = userPetRepository.findByEmail(loginRequest.getEmail());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Email không tồn tại!");
+        }
+
+        UserPet userPet = userOpt.get();
+
+        // Kiểm tra password
+        if (!passwordEncoder.matches(loginRequest.getPassword(), userPet.getPasswordHash())) {
+            return ResponseEntity.badRequest().body("Sai mật khẩu!");
+        }
+
+        return ResponseEntity.ok("Đăng nhập thành công!");
     }
 }
