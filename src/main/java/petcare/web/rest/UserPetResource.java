@@ -224,7 +224,7 @@ public class UserPetResource {
             return ResponseEntity.badRequest().body("Email không tồn tại!");
         }
 
-        UserPet userPet = userOpt.get();
+        UserPet userPet = userOpt.orElseThrow(() -> new RuntimeException("User not found"));
 
         // Kiểm tra password
         if (!passwordEncoder.matches(loginRequest.getPassword(), userPet.getPasswordHash())) {
