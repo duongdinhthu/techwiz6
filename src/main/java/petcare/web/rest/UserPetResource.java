@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -218,19 +219,26 @@ public class UserPetResource {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest loginRequest) {
         Optional<UserPet> userOpt = userPetRepository.findByEmail(loginRequest.getEmail());
         if (userOpt.isEmpty()) {
-            return ResponseEntity.badRequest().body("Email không tồn tại!");
+            return ResponseEntity.badRequest().body(Map.of("error", "Email không tồn tại!"));
         }
 
-        UserPet userPet = userOpt.orElseThrow(() -> new RuntimeException("User not found"));
+        UserPet userPet = userOpt.get();
 
-        // Kiểm tra password
         if (!passwordEncoder.matches(loginRequest.getPassword(), userPet.getPasswordHash())) {
-            return ResponseEntity.badRequest().body("Sai mật khẩu!");
+            return ResponseEntity.badRequest().body(Map.of("error", "Sai mật khẩu!"));
         }
 
-        return ResponseEntity.ok("Đăng nhập thành công!");
+        Map<String, Object> result = Map.of(
+            "id", userPet.getId(),
+            "email", userPet.getEmail(),
+            "name", userPet.getName(),
+            "message", "Đăng nhập thành công!"
+        );
+
+        return ResponseEntity.ok(result);
     }
+
 }
