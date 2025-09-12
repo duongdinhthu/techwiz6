@@ -26,8 +26,6 @@ public class AppointmentDTO implements Serializable {
     @NotNull
     private Instant apptTime;
 
-    private Long vetId;
-
     private AppointmentStatus status;
 
     private Instant createdAt;
@@ -70,14 +68,6 @@ public class AppointmentDTO implements Serializable {
 
     public void setApptTime(Instant apptTime) {
         this.apptTime = apptTime;
-    }
-
-    public Long getVetId() {
-        return vetId;
-    }
-
-    public void setVetId(Long vetId) {
-        this.vetId = vetId;
     }
 
     public AppointmentStatus getStatus() {
@@ -126,7 +116,6 @@ public class AppointmentDTO implements Serializable {
             ", ownerId=" + getOwnerId() +
             ", discoveryId=" + getDiscoveryId() +
             ", apptTime='" + getApptTime() + "'" +
-            ", vetId=" + getVetId() +
             ", status='" + getStatus() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             "}";

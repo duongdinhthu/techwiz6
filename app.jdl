@@ -45,7 +45,6 @@ entity Appointment {
   ownerId Long required,
   discoveryId Long required,
   apptTime Instant required,
-  vetId Long,                      // optional, gán sau khi phân công
   status AppointmentStatus,
   createdAt Instant
 }

@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import petcare.domain.UserPet;
 
-
 @SuppressWarnings("unused")
 @Repository
 public interface UserPetRepository extends JpaRepository<UserPet, Long>, JpaSpecificationExecutor<UserPet> {

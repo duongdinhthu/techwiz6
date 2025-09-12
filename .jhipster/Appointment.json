@@ -26,10 +26,6 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "vetId",
-      "fieldType": "Long"
-    },
-    {
       "fieldName": "status",
       "fieldType": "AppointmentStatus",
       "fieldValues": "PENDING,CONFIRMED,CANCELLED,DONE"

@@ -77,7 +77,6 @@ public class AppointmentQueryService extends QueryService<Appointment> {
                 buildRangeSpecification(criteria.getOwnerId(), Appointment_.ownerId),
                 buildRangeSpecification(criteria.getDiscoveryId(), Appointment_.discoveryId),
                 buildRangeSpecification(criteria.getApptTime(), Appointment_.apptTime),
-                buildRangeSpecification(criteria.getVetId(), Appointment_.vetId),
                 buildSpecification(criteria.getStatus(), Appointment_.status),
                 buildRangeSpecification(criteria.getCreatedAt(), Appointment_.createdAt)
             );

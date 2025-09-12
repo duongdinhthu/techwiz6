@@ -37,9 +37,6 @@ public class Appointment implements Serializable {
     @Column(name = "appt_time", nullable = false)
     private Instant apptTime;
 
-    @Column(name = "vet_id")
-    private Long vetId;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private AppointmentStatus status;
@@ -114,19 +111,6 @@ public class Appointment implements Serializable {
         this.apptTime = apptTime;
     }
 
-    public Long getVetId() {
-        return this.vetId;
-    }
-
-    public Appointment vetId(Long vetId) {
-        this.setVetId(vetId);
-        return this;
-    }
-
-    public void setVetId(Long vetId) {
-        this.vetId = vetId;
-    }
-
     public AppointmentStatus getStatus() {
         return this.status;
     }
@@ -181,7 +165,6 @@ public class Appointment implements Serializable {
             ", ownerId=" + getOwnerId() +
             ", discoveryId=" + getDiscoveryId() +
             ", apptTime='" + getApptTime() + "'" +
-            ", vetId=" + getVetId() +
             ", status='" + getStatus() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             "}";

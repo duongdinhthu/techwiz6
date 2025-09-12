@@ -50,10 +50,14 @@ public class UserPetResource {
 
     private final UserPetQueryService userPetQueryService;
 
-    private final PasswordEncoder passwordEncoder; // <--- thêm dòng này
+    private final PasswordEncoder passwordEncoder;
 
-
-    public UserPetResource(UserPetService userPetService, UserPetRepository userPetRepository, UserPetQueryService userPetQueryService, PasswordEncoder passwordEncoder) {
+    public UserPetResource(
+        UserPetService userPetService,
+        UserPetRepository userPetRepository,
+        UserPetQueryService userPetQueryService,
+        PasswordEncoder passwordEncoder
+    ) {
         this.userPetService = userPetService;
         this.userPetRepository = userPetRepository;
         this.userPetQueryService = userPetQueryService;
@@ -206,6 +210,7 @@ public class UserPetResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
     @PostMapping("/register")
     public ResponseEntity<UserPetDTO> register(@Valid @RequestBody UserPetDTO userPetDTO) {
         LOG.debug("REST request to register UserPet : {}", userPetDTO);
@@ -242,10 +247,14 @@ public class UserPetResource {
         }
 
         Map<String, Object> result = Map.of(
-            "id", userPet.getId(),
-            "email", userPet.getEmail(),
-            "name", userPet.getName(),
-            "message", "Đăng nhập thành công!"
+            "id",
+            userPet.getId(),
+            "email",
+            userPet.getEmail(),
+            "name",
+            userPet.getName(),
+            "message",
+            "Đăng nhập thành công!"
         );
 
         return ResponseEntity.ok(result);
