@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -14,12 +15,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import petcare.domain.UserPet;
 import petcare.repository.UserPetRepository;
 import petcare.service.UserPetQueryService;
 import petcare.service.UserPetService;
 import petcare.service.criteria.UserPetCriteria;
+import petcare.service.dto.LoginRequest;
 import petcare.service.dto.UserPetDTO;
 import petcare.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
@@ -46,10 +50,14 @@ public class UserPetResource {
 
     private final UserPetQueryService userPetQueryService;
 
-    public UserPetResource(UserPetService userPetService, UserPetRepository userPetRepository, UserPetQueryService userPetQueryService) {
+    private final PasswordEncoder passwordEncoder; // <--- thêm dòng này
+
+
+    public UserPetResource(UserPetService userPetService, UserPetRepository userPetRepository, UserPetQueryService userPetQueryService, PasswordEncoder passwordEncoder) {
         this.userPetService = userPetService;
         this.userPetRepository = userPetRepository;
         this.userPetQueryService = userPetQueryService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -197,5 +205,49 @@ public class UserPetResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
+    }
+    @PostMapping("/register")
+    public ResponseEntity<UserPetDTO> register(@Valid @RequestBody UserPetDTO userPetDTO) {
+        LOG.debug("REST request to register UserPet : {}", userPetDTO);
+
+        if (userPetDTO.getId() != null) {
+            throw new BadRequestAlertException("A new userPet cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+
+        // Mã hóa password trước khi lưu
+        userPetDTO.setPasswordHash(passwordEncoder.encode(userPetDTO.getPasswordHash()));
+
+        UserPetDTO result = userPetService.save(userPetDTO);
+
+        return ResponseEntity.created(URI.create("/api/user-pets/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    // ================= LOGIN =================
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest loginRequest) {
+        LOG.debug("REST request to login UserPet : {}", loginRequest.getEmail());
+
+        Optional<UserPet> userOpt = userPetRepository.findByEmail(loginRequest.getEmail());
+
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Email không tồn tại!"));
+        }
+
+        UserPet userPet = userOpt.get();
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), userPet.getPasswordHash())) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Sai mật khẩu!"));
+        }
+
+        Map<String, Object> result = Map.of(
+            "id", userPet.getId(),
+            "email", userPet.getEmail(),
+            "name", userPet.getName(),
+            "message", "Đăng nhập thành công!"
+        );
+
+        return ResponseEntity.ok(result);
     }
 }
