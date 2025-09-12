@@ -80,6 +80,7 @@ public class PetQueryService extends QueryService<Pet> {
                 buildRangeSpecification(criteria.getAge(), Pet_.age),
                 buildSpecification(criteria.getGender(), Pet_.gender),
                 buildStringSpecification(criteria.getPhotoUrl(), Pet_.photoUrl),
+                buildStringSpecification(criteria.getAvatar(), Pet_.avatar),
                 buildRangeSpecification(criteria.getCreatedAt(), Pet_.createdAt)
             );
         }

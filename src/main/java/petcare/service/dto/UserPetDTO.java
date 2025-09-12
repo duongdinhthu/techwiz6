@@ -15,25 +15,28 @@ public class UserPetDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 100)
+    @Size(max = 1000)
     private String name;
 
     @NotNull
-    @Size(max = 100)
+    @Size(max = 1000)
     private String email;
 
     @NotNull
-    @Size(max = 255)
+    @Size(max = 1000)
     private String passwordHash;
 
-    @Size(max = 20)
+    @Size(max = 1000)
     private String phone;
 
-    @Size(max = 255)
+    @Size(max = 1000)
     private String address;
 
     @NotNull
     private UserRole role;
+
+    @Size(max = 1000)
+    private String avatar;
 
     private Instant createdAt;
 
@@ -93,6 +96,14 @@ public class UserPetDTO implements Serializable {
         this.role = role;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -133,6 +144,7 @@ public class UserPetDTO implements Serializable {
             ", phone='" + getPhone() + "'" +
             ", address='" + getAddress() + "'" +
             ", role='" + getRole() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             "}";
     }

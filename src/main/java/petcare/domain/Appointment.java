@@ -30,12 +30,15 @@ public class Appointment implements Serializable {
     private Long ownerId;
 
     @NotNull
-    @Column(name = "vet_id", nullable = false)
-    private Long vetId;
+    @Column(name = "discovery_id", nullable = false)
+    private Long discoveryId;
 
     @NotNull
     @Column(name = "appt_time", nullable = false)
     private Instant apptTime;
+
+    @Column(name = "vet_id")
+    private Long vetId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -85,17 +88,17 @@ public class Appointment implements Serializable {
         this.ownerId = ownerId;
     }
 
-    public Long getVetId() {
-        return this.vetId;
+    public Long getDiscoveryId() {
+        return this.discoveryId;
     }
 
-    public Appointment vetId(Long vetId) {
-        this.setVetId(vetId);
+    public Appointment discoveryId(Long discoveryId) {
+        this.setDiscoveryId(discoveryId);
         return this;
     }
 
-    public void setVetId(Long vetId) {
-        this.vetId = vetId;
+    public void setDiscoveryId(Long discoveryId) {
+        this.discoveryId = discoveryId;
     }
 
     public Instant getApptTime() {
@@ -109,6 +112,19 @@ public class Appointment implements Serializable {
 
     public void setApptTime(Instant apptTime) {
         this.apptTime = apptTime;
+    }
+
+    public Long getVetId() {
+        return this.vetId;
+    }
+
+    public Appointment vetId(Long vetId) {
+        this.setVetId(vetId);
+        return this;
+    }
+
+    public void setVetId(Long vetId) {
+        this.vetId = vetId;
     }
 
     public AppointmentStatus getStatus() {
@@ -163,8 +179,9 @@ public class Appointment implements Serializable {
             "id=" + getId() +
             ", petId=" + getPetId() +
             ", ownerId=" + getOwnerId() +
-            ", vetId=" + getVetId() +
+            ", discoveryId=" + getDiscoveryId() +
             ", apptTime='" + getApptTime() + "'" +
+            ", vetId=" + getVetId() +
             ", status='" + getStatus() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             "}";

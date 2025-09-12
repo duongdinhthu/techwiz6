@@ -79,6 +79,7 @@ public class UserPetQueryService extends QueryService<UserPet> {
                 buildStringSpecification(criteria.getPhone(), UserPet_.phone),
                 buildStringSpecification(criteria.getAddress(), UserPet_.address),
                 buildSpecification(criteria.getRole(), UserPet_.role),
+                buildStringSpecification(criteria.getAvatar(), UserPet_.avatar),
                 buildRangeSpecification(criteria.getCreatedAt(), UserPet_.createdAt)
             );
         }

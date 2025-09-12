@@ -32,13 +32,16 @@ public class HealthRecord implements Serializable {
     @Column(name = "appt_id", nullable = false)
     private Long apptId;
 
-    @Column(name = "diagnosis")
+    @Size(max = 1000)
+    @Column(name = "diagnosis", length = 1000)
     private String diagnosis;
 
-    @Column(name = "treatment")
+    @Size(max = 1000)
+    @Column(name = "treatment", length = 1000)
     private String treatment;
 
-    @Column(name = "notes")
+    @Size(max = 1000)
+    @Column(name = "notes", length = 1000)
     private String notes;
 
     @Column(name = "created_at")

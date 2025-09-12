@@ -56,6 +56,8 @@ public class PetCriteria implements Serializable, Criteria {
 
     private StringFilter photoUrl;
 
+    private StringFilter avatar;
+
     private InstantFilter createdAt;
 
     private Boolean distinct;
@@ -71,6 +73,7 @@ public class PetCriteria implements Serializable, Criteria {
         this.age = other.optionalAge().map(IntegerFilter::copy).orElse(null);
         this.gender = other.optionalGender().map(GenderFilter::copy).orElse(null);
         this.photoUrl = other.optionalPhotoUrl().map(StringFilter::copy).orElse(null);
+        this.avatar = other.optionalAvatar().map(StringFilter::copy).orElse(null);
         this.createdAt = other.optionalCreatedAt().map(InstantFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
@@ -232,6 +235,25 @@ public class PetCriteria implements Serializable, Criteria {
         this.photoUrl = photoUrl;
     }
 
+    public StringFilter getAvatar() {
+        return avatar;
+    }
+
+    public Optional<StringFilter> optionalAvatar() {
+        return Optional.ofNullable(avatar);
+    }
+
+    public StringFilter avatar() {
+        if (avatar == null) {
+            setAvatar(new StringFilter());
+        }
+        return avatar;
+    }
+
+    public void setAvatar(StringFilter avatar) {
+        this.avatar = avatar;
+    }
+
     public InstantFilter getCreatedAt() {
         return createdAt;
     }
@@ -288,6 +310,7 @@ public class PetCriteria implements Serializable, Criteria {
             Objects.equals(age, that.age) &&
             Objects.equals(gender, that.gender) &&
             Objects.equals(photoUrl, that.photoUrl) &&
+            Objects.equals(avatar, that.avatar) &&
             Objects.equals(createdAt, that.createdAt) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -295,7 +318,7 @@ public class PetCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ownerId, name, species, breed, age, gender, photoUrl, createdAt, distinct);
+        return Objects.hash(id, ownerId, name, species, breed, age, gender, photoUrl, avatar, createdAt, distinct);
     }
 
     // prettier-ignore
@@ -310,6 +333,7 @@ public class PetCriteria implements Serializable, Criteria {
             optionalAge().map(f -> "age=" + f + ", ").orElse("") +
             optionalGender().map(f -> "gender=" + f + ", ").orElse("") +
             optionalPhotoUrl().map(f -> "photoUrl=" + f + ", ").orElse("") +
+            optionalAvatar().map(f -> "avatar=" + f + ", ").orElse("") +
             optionalCreatedAt().map(f -> "createdAt=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";

@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20250911074640"
+    "changelogDate": "20250912101323"
   },
   "applications": "*",
   "dto": "mapstruct",
@@ -12,40 +12,28 @@
       "fieldValidateRulesMaxlength": "1000"
     },
     {
-      "fieldName": "email",
-      "fieldType": "String",
-      "fieldValidateRules": ["required", "maxlength", "unique"],
-      "fieldValidateRulesMaxlength": "1000"
-    },
-    {
-      "fieldName": "passwordHash",
-      "fieldType": "String",
-      "fieldValidateRules": ["required", "maxlength"],
-      "fieldValidateRulesMaxlength": "1000"
-    },
-    {
-      "fieldName": "phone",
+      "fieldName": "description",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength"],
       "fieldValidateRulesMaxlength": "1000"
     },
     {
-      "fieldName": "address",
+      "fieldName": "category",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "500"
+    },
+    {
+      "fieldName": "requirements",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength"],
       "fieldValidateRulesMaxlength": "1000"
     },
     {
-      "fieldName": "role",
-      "fieldType": "UserRole",
-      "fieldValidateRules": ["required"],
-      "fieldValues": "OWNER,VET,SHELTER"
-    },
-    {
-      "fieldName": "avatar",
+      "fieldName": "location",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "1000"
+      "fieldValidateRulesMaxlength": "500"
     },
     {
       "fieldName": "createdAt",
@@ -53,7 +41,7 @@
     }
   ],
   "jpaMetamodelFiltering": true,
-  "name": "UserPet",
+  "name": "Discovery",
   "pagination": "pagination",
   "relationships": [],
   "searchEngine": "no",

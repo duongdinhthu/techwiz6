@@ -26,16 +26,16 @@ public class Pet implements Serializable {
     private Long ownerId;
 
     @NotNull
-    @Size(max = 100)
-    @Column(name = "name", length = 100, nullable = false)
+    @Size(max = 1000)
+    @Column(name = "name", length = 1000, nullable = false)
     private String name;
 
-    @Size(max = 50)
-    @Column(name = "species", length = 50)
+    @Size(max = 1000)
+    @Column(name = "species", length = 1000)
     private String species;
 
-    @Size(max = 50)
-    @Column(name = "breed", length = 50)
+    @Size(max = 1000)
+    @Column(name = "breed", length = 1000)
     private String breed;
 
     @Column(name = "age")
@@ -45,9 +45,13 @@ public class Pet implements Serializable {
     @Column(name = "gender")
     private Gender gender;
 
-    @Size(max = 255)
-    @Column(name = "photo_url", length = 255)
+    @Size(max = 1000)
+    @Column(name = "photo_url", length = 1000)
     private String photoUrl;
+
+    @Size(max = 1000)
+    @Column(name = "avatar", length = 1000)
+    private String avatar;
 
     @Column(name = "created_at")
     private Instant createdAt;
@@ -158,6 +162,19 @@ public class Pet implements Serializable {
         this.photoUrl = photoUrl;
     }
 
+    public String getAvatar() {
+        return this.avatar;
+    }
+
+    public Pet avatar(String avatar) {
+        this.setAvatar(avatar);
+        return this;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public Instant getCreatedAt() {
         return this.createdAt;
     }
@@ -202,6 +219,7 @@ public class Pet implements Serializable {
             ", age=" + getAge() +
             ", gender='" + getGender() + "'" +
             ", photoUrl='" + getPhotoUrl() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             "}";
     }

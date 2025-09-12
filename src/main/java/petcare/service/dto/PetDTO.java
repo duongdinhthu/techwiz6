@@ -18,21 +18,24 @@ public class PetDTO implements Serializable {
     private Long ownerId;
 
     @NotNull
-    @Size(max = 100)
+    @Size(max = 1000)
     private String name;
 
-    @Size(max = 50)
+    @Size(max = 1000)
     private String species;
 
-    @Size(max = 50)
+    @Size(max = 1000)
     private String breed;
 
     private Integer age;
 
     private Gender gender;
 
-    @Size(max = 255)
+    @Size(max = 1000)
     private String photoUrl;
+
+    @Size(max = 1000)
+    private String avatar;
 
     private Instant createdAt;
 
@@ -100,6 +103,14 @@ public class PetDTO implements Serializable {
         this.photoUrl = photoUrl;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -141,6 +152,7 @@ public class PetDTO implements Serializable {
             ", age=" + getAge() +
             ", gender='" + getGender() + "'" +
             ", photoUrl='" + getPhotoUrl() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             "}";
     }

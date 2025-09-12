@@ -46,9 +46,11 @@ public class AppointmentCriteria implements Serializable, Criteria {
 
     private LongFilter ownerId;
 
-    private LongFilter vetId;
+    private LongFilter discoveryId;
 
     private InstantFilter apptTime;
+
+    private LongFilter vetId;
 
     private AppointmentStatusFilter status;
 
@@ -62,8 +64,9 @@ public class AppointmentCriteria implements Serializable, Criteria {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.petId = other.optionalPetId().map(LongFilter::copy).orElse(null);
         this.ownerId = other.optionalOwnerId().map(LongFilter::copy).orElse(null);
-        this.vetId = other.optionalVetId().map(LongFilter::copy).orElse(null);
+        this.discoveryId = other.optionalDiscoveryId().map(LongFilter::copy).orElse(null);
         this.apptTime = other.optionalApptTime().map(InstantFilter::copy).orElse(null);
+        this.vetId = other.optionalVetId().map(LongFilter::copy).orElse(null);
         this.status = other.optionalStatus().map(AppointmentStatusFilter::copy).orElse(null);
         this.createdAt = other.optionalCreatedAt().map(InstantFilter::copy).orElse(null);
         this.distinct = other.distinct;
@@ -131,23 +134,23 @@ public class AppointmentCriteria implements Serializable, Criteria {
         this.ownerId = ownerId;
     }
 
-    public LongFilter getVetId() {
-        return vetId;
+    public LongFilter getDiscoveryId() {
+        return discoveryId;
     }
 
-    public Optional<LongFilter> optionalVetId() {
-        return Optional.ofNullable(vetId);
+    public Optional<LongFilter> optionalDiscoveryId() {
+        return Optional.ofNullable(discoveryId);
     }
 
-    public LongFilter vetId() {
-        if (vetId == null) {
-            setVetId(new LongFilter());
+    public LongFilter discoveryId() {
+        if (discoveryId == null) {
+            setDiscoveryId(new LongFilter());
         }
-        return vetId;
+        return discoveryId;
     }
 
-    public void setVetId(LongFilter vetId) {
-        this.vetId = vetId;
+    public void setDiscoveryId(LongFilter discoveryId) {
+        this.discoveryId = discoveryId;
     }
 
     public InstantFilter getApptTime() {
@@ -167,6 +170,25 @@ public class AppointmentCriteria implements Serializable, Criteria {
 
     public void setApptTime(InstantFilter apptTime) {
         this.apptTime = apptTime;
+    }
+
+    public LongFilter getVetId() {
+        return vetId;
+    }
+
+    public Optional<LongFilter> optionalVetId() {
+        return Optional.ofNullable(vetId);
+    }
+
+    public LongFilter vetId() {
+        if (vetId == null) {
+            setVetId(new LongFilter());
+        }
+        return vetId;
+    }
+
+    public void setVetId(LongFilter vetId) {
+        this.vetId = vetId;
     }
 
     public AppointmentStatusFilter getStatus() {
@@ -239,8 +261,9 @@ public class AppointmentCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(petId, that.petId) &&
             Objects.equals(ownerId, that.ownerId) &&
-            Objects.equals(vetId, that.vetId) &&
+            Objects.equals(discoveryId, that.discoveryId) &&
             Objects.equals(apptTime, that.apptTime) &&
+            Objects.equals(vetId, that.vetId) &&
             Objects.equals(status, that.status) &&
             Objects.equals(createdAt, that.createdAt) &&
             Objects.equals(distinct, that.distinct)
@@ -249,7 +272,7 @@ public class AppointmentCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, petId, ownerId, vetId, apptTime, status, createdAt, distinct);
+        return Objects.hash(id, petId, ownerId, discoveryId, apptTime, vetId, status, createdAt, distinct);
     }
 
     // prettier-ignore
@@ -259,8 +282,9 @@ public class AppointmentCriteria implements Serializable, Criteria {
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalPetId().map(f -> "petId=" + f + ", ").orElse("") +
             optionalOwnerId().map(f -> "ownerId=" + f + ", ").orElse("") +
-            optionalVetId().map(f -> "vetId=" + f + ", ").orElse("") +
+            optionalDiscoveryId().map(f -> "discoveryId=" + f + ", ").orElse("") +
             optionalApptTime().map(f -> "apptTime=" + f + ", ").orElse("") +
+            optionalVetId().map(f -> "vetId=" + f + ", ").orElse("") +
             optionalStatus().map(f -> "status=" + f + ", ").orElse("") +
             optionalCreatedAt().map(f -> "createdAt=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +

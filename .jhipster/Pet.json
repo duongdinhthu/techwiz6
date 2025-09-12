@@ -14,19 +14,19 @@
       "fieldName": "name",
       "fieldType": "String",
       "fieldValidateRules": ["required", "maxlength"],
-      "fieldValidateRulesMaxlength": "100"
+      "fieldValidateRulesMaxlength": "1000"
     },
     {
       "fieldName": "species",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "50"
+      "fieldValidateRulesMaxlength": "1000"
     },
     {
       "fieldName": "breed",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "50"
+      "fieldValidateRulesMaxlength": "1000"
     },
     {
       "fieldName": "age",
@@ -41,7 +41,13 @@
       "fieldName": "photoUrl",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "255"
+      "fieldValidateRulesMaxlength": "1000"
+    },
+    {
+      "fieldName": "avatar",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000"
     },
     {
       "fieldName": "createdAt",

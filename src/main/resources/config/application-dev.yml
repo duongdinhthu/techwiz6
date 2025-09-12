@@ -17,9 +17,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:33060/petcare?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/petcare?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
     username: root
-    password: 12345678a@
+    password:
     hikari:
       poolName: Hikari
       auto-commit: false

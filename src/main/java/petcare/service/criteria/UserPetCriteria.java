@@ -54,6 +54,8 @@ public class UserPetCriteria implements Serializable, Criteria {
 
     private UserRoleFilter role;
 
+    private StringFilter avatar;
+
     private InstantFilter createdAt;
 
     private Boolean distinct;
@@ -68,6 +70,7 @@ public class UserPetCriteria implements Serializable, Criteria {
         this.phone = other.optionalPhone().map(StringFilter::copy).orElse(null);
         this.address = other.optionalAddress().map(StringFilter::copy).orElse(null);
         this.role = other.optionalRole().map(UserRoleFilter::copy).orElse(null);
+        this.avatar = other.optionalAvatar().map(StringFilter::copy).orElse(null);
         this.createdAt = other.optionalCreatedAt().map(InstantFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
@@ -210,6 +213,25 @@ public class UserPetCriteria implements Serializable, Criteria {
         this.role = role;
     }
 
+    public StringFilter getAvatar() {
+        return avatar;
+    }
+
+    public Optional<StringFilter> optionalAvatar() {
+        return Optional.ofNullable(avatar);
+    }
+
+    public StringFilter avatar() {
+        if (avatar == null) {
+            setAvatar(new StringFilter());
+        }
+        return avatar;
+    }
+
+    public void setAvatar(StringFilter avatar) {
+        this.avatar = avatar;
+    }
+
     public InstantFilter getCreatedAt() {
         return createdAt;
     }
@@ -265,6 +287,7 @@ public class UserPetCriteria implements Serializable, Criteria {
             Objects.equals(phone, that.phone) &&
             Objects.equals(address, that.address) &&
             Objects.equals(role, that.role) &&
+            Objects.equals(avatar, that.avatar) &&
             Objects.equals(createdAt, that.createdAt) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -272,7 +295,7 @@ public class UserPetCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, passwordHash, phone, address, role, createdAt, distinct);
+        return Objects.hash(id, name, email, passwordHash, phone, address, role, avatar, createdAt, distinct);
     }
 
     // prettier-ignore
@@ -286,6 +309,7 @@ public class UserPetCriteria implements Serializable, Criteria {
             optionalPhone().map(f -> "phone=" + f + ", ").orElse("") +
             optionalAddress().map(f -> "address=" + f + ", ").orElse("") +
             optionalRole().map(f -> "role=" + f + ", ").orElse("") +
+            optionalAvatar().map(f -> "avatar=" + f + ", ").orElse("") +
             optionalCreatedAt().map(f -> "createdAt=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";

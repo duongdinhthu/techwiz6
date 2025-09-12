@@ -3,15 +3,12 @@ package petcare.service;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import petcare.config.PasswordEndcodeConfig;
 import petcare.domain.UserPet;
 import petcare.repository.UserPetRepository;
 import petcare.service.dto.UserPetDTO;
 import petcare.service.mapper.UserPetMapper;
-import petcare.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link petcare.domain.UserPet}.
@@ -26,17 +23,9 @@ public class UserPetService {
 
     private final UserPetMapper userPetMapper;
 
-    private final PasswordEncoder passwordEncoder;
-
-    public UserPetService(
-        UserPetRepository userPetRepository,
-        UserPetMapper userPetMapper,
-        PasswordEndcodeConfig passwordEndcodeConfig,
-        PasswordEncoder passwordEncoder
-    ) {
+    public UserPetService(UserPetRepository userPetRepository, UserPetMapper userPetMapper) {
         this.userPetRepository = userPetRepository;
         this.userPetMapper = userPetMapper;
-        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -105,18 +94,5 @@ public class UserPetService {
     public void delete(Long id) {
         LOG.debug("Request to delete UserPet : {}", id);
         userPetRepository.deleteById(id);
-    }
-
-    public UserPetDTO register(UserPetDTO userPetDTO) {
-        if (userPetRepository.existsByEmail(userPetDTO.getEmail())) {
-            throw new BadRequestAlertException("Email already in use", "userPet", "emailexists");
-        }
-
-        String encodedPassword = passwordEncoder.encode(userPetDTO.getPasswordHash());
-        userPetDTO.setPasswordHash(encodedPassword);
-
-        var entity = userPetMapper.toEntity(userPetDTO);
-        entity = userPetRepository.save(entity);
-        return userPetMapper.toDto(entity);
     }
 }

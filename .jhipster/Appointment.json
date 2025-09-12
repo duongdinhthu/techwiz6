@@ -16,7 +16,7 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "vetId",
+      "fieldName": "discoveryId",
       "fieldType": "Long",
       "fieldValidateRules": ["required"]
     },
@@ -24,6 +24,10 @@
       "fieldName": "apptTime",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "vetId",
+      "fieldType": "Long"
     },
     {
       "fieldName": "status",

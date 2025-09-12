@@ -23,13 +23,13 @@
             <column name="appt_id" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="diagnosis" type="varchar(255)">
+            <column name="diagnosis" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
-            <column name="treatment" type="varchar(255)">
+            <column name="treatment" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
-            <column name="notes" type="varchar(255)">
+            <column name="notes" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
             <column name="created_at" type="${datetimeType}">

@@ -22,15 +22,21 @@
     },
     {
       "fieldName": "diagnosis",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000"
     },
     {
       "fieldName": "treatment",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000"
     },
     {
       "fieldName": "notes",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000"
     },
     {
       "fieldName": "createdAt",

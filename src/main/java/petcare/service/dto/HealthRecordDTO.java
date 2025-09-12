@@ -22,10 +22,13 @@ public class HealthRecordDTO implements Serializable {
     @NotNull
     private Long apptId;
 
+    @Size(max = 1000)
     private String diagnosis;
 
+    @Size(max = 1000)
     private String treatment;
 
+    @Size(max = 1000)
     private String notes;
 
     private Instant createdAt;

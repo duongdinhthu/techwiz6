@@ -1,10 +1,11 @@
 entity UserPet {
-  name String required maxlength(100),
-  email String required maxlength(100) unique,
-  passwordHash String required maxlength(255),
-  phone String maxlength(20),
-  address String maxlength(255),
+  name String required maxlength(1000),
+  email String required maxlength(1000) unique,
+  passwordHash String required maxlength(1000),
+  phone String maxlength(1000),
+  address String maxlength(1000),
   role UserRole required,
+  avatar String maxlength(1000),
   createdAt Instant
 }
 
@@ -14,12 +15,13 @@ enum UserRole {
 
 entity Pet {
   ownerId Long required,
-  name String required maxlength(100),
-  species String maxlength(50),
-  breed String maxlength(50),
+  name String required maxlength(1000),
+  species String maxlength(1000),
+  breed String maxlength(1000),
   age Integer,
   gender Gender,
-  photoUrl String maxlength(255),
+  photoUrl String maxlength(1000),
+  avatar String maxlength(1000),
   createdAt Instant
 }
 
@@ -27,11 +29,23 @@ enum Gender {
   MALE, FEMALE
 }
 
+entity Discovery {
+  name String required maxlength(1000),
+  description String maxlength(1000),
+  category String maxlength(500),
+  requirements String maxlength(1000),
+  location String maxlength(500),
+  createdAt Instant
+}
+
+
+// 🔹 Giữ petId bắt buộc khi đặt lịch
 entity Appointment {
-  petId Long required,
+  petId Long required,             // bắt buộc phải có pet
   ownerId Long required,
-  vetId Long required,
+  discoveryId Long required,
   apptTime Instant required,
+  vetId Long,                      // optional, gán sau khi phân công
   status AppointmentStatus,
   createdAt Instant
 }
@@ -44,12 +58,13 @@ entity HealthRecord {
   petId Long required,
   vetId Long required,
   apptId Long required,
-  diagnosis String,
-  treatment String,
-  notes String,
+  diagnosis String maxlength(1000),
+  treatment String maxlength(1000),
+  notes String maxlength(1000),
   createdAt Instant
 }
 
+// --- JHipster common options ---
 dto * with mapstruct
 service * with serviceClass
 paginate * with pagination

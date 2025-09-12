@@ -22,32 +22,36 @@ public class UserPet implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 100)
-    @Column(name = "name", length = 100, nullable = false)
+    @Size(max = 1000)
+    @Column(name = "name", length = 1000, nullable = false)
     private String name;
 
     @NotNull
-    @Size(max = 100)
-    @Column(name = "email", length = 100, nullable = false, unique = true)
+    @Size(max = 1000)
+    @Column(name = "email", length = 1000, nullable = false, unique = true)
     private String email;
 
     @NotNull
-    @Size(max = 255)
-    @Column(name = "password_hash", length = 255, nullable = false)
+    @Size(max = 1000)
+    @Column(name = "password_hash", length = 1000, nullable = false)
     private String passwordHash;
 
-    @Size(max = 20)
-    @Column(name = "phone", length = 20)
+    @Size(max = 1000)
+    @Column(name = "phone", length = 1000)
     private String phone;
 
-    @Size(max = 255)
-    @Column(name = "address", length = 255)
+    @Size(max = 1000)
+    @Column(name = "address", length = 1000)
     private String address;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private UserRole role;
+
+    @Size(max = 1000)
+    @Column(name = "avatar", length = 1000)
+    private String avatar;
 
     @Column(name = "created_at")
     private Instant createdAt;
@@ -145,6 +149,19 @@ public class UserPet implements Serializable {
         this.role = role;
     }
 
+    public String getAvatar() {
+        return this.avatar;
+    }
+
+    public UserPet avatar(String avatar) {
+        this.setAvatar(avatar);
+        return this;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public Instant getCreatedAt() {
         return this.createdAt;
     }
@@ -188,6 +205,7 @@ public class UserPet implements Serializable {
             ", phone='" + getPhone() + "'" +
             ", address='" + getAddress() + "'" +
             ", role='" + getRole() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             "}";
     }
