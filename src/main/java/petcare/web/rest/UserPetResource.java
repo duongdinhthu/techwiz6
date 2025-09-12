@@ -259,4 +259,28 @@ public class UserPetResource {
 
         return ResponseEntity.ok(result);
     }
+
+    @PatchMapping("/{id}/avatar")
+    public ResponseEntity<UserPetDTO> updateUserAvatar(@PathVariable Long id, @RequestBody Map<String, String> request) {
+        LOG.debug("REST request to update UserPet avatar : {}", id);
+
+        String avatar = request.get("avatar");
+        if (avatar == null || avatar.isEmpty()) {
+            throw new BadRequestAlertException("Avatar cannot be empty", ENTITY_NAME, "avatarnull");
+        }
+
+        Optional<UserPetDTO> userPetOpt = userPetService.findOne(id);
+        if (userPetOpt.isEmpty()) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        UserPetDTO userPetDTO = userPetOpt.get();
+        userPetDTO.setAvatar(avatar);
+
+        userPetDTO = userPetService.update(userPetDTO);
+
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, userPetDTO.getId().toString()))
+            .body(userPetDTO);
+    }
 }
