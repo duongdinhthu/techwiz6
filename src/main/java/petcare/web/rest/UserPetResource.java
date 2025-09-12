@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -218,6 +219,8 @@ public class UserPetResource {
 
         // Mã hóa password trước khi lưu
         userPetDTO.setPasswordHash(passwordEncoder.encode(userPetDTO.getPasswordHash()));
+
+        userPetDTO.setCreatedAt(Instant.now());
 
         UserPetDTO result = userPetService.save(userPetDTO);
 
