@@ -4,10 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -246,16 +243,15 @@ public class UserPetResource {
             return ResponseEntity.badRequest().body(Map.of("error", "Sai mật khẩu!"));
         }
 
-        Map<String, Object> result = Map.of(
-            "id",
-            userPet.getId(),
-            "email",
-            userPet.getEmail(),
-            "name",
-            userPet.getName(),
-            "message",
-            "Đăng nhập thành công!"
-        );
+        Map<String, Object> result = new HashMap<>();
+        result.put("id", userPet.getId());
+        result.put("name", userPet.getName());
+        result.put("email", userPet.getEmail());
+        result.put("phone", userPet.getPhone());
+        result.put("address", userPet.getAddress());
+        result.put("avatar", userPet.getAvatar());
+        result.put("createdAt", userPet.getCreatedAt());
+        result.put("message", "Đăng nhập thành công!");
 
         return ResponseEntity.ok(result);
     }
