@@ -1,5 +1,6 @@
 package petcare.service;
 
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,5 +95,9 @@ public class PetService {
     public void delete(Long id) {
         LOG.debug("Request to delete Pet : {}", id);
         petRepository.deleteById(id);
+    }
+
+    public List<PetDTO> findByOwnerId(Long ownerId) {
+        return petRepository.findByOwnerId(ownerId).stream().map(petMapper::toDto).toList();
     }
 }

@@ -1,5 +1,6 @@
 package petcare.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import petcare.domain.Pet;
@@ -9,4 +10,6 @@ import petcare.domain.Pet;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface PetRepository extends JpaRepository<Pet, Long>, JpaSpecificationExecutor<Pet> {}
+public interface PetRepository extends JpaRepository<Pet, Long>, JpaSpecificationExecutor<Pet> {
+    List<Pet> findByOwnerId(Long ownerId);
+}

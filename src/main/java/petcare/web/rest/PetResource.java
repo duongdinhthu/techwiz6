@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import petcare.domain.Pet;
 import petcare.repository.PetRepository;
 import petcare.service.PetQueryService;
 import petcare.service.PetService;
@@ -195,5 +196,14 @@ public class PetResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<PetDTO>> getPetsByUserId(@PathVariable Long userId) {
+        LOG.debug("REST request to get all Pets by User ID: {}", userId);
+
+        List<PetDTO> pets = petService.findByOwnerId(userId);
+
+        return ResponseEntity.ok().body(pets);
     }
 }
