@@ -12,4 +12,5 @@ import petcare.domain.Pet;
 @Repository
 public interface PetRepository extends JpaRepository<Pet, Long>, JpaSpecificationExecutor<Pet> {
     List<Pet> findByOwnerId(Long ownerId);
+    Long countByOwnerId(Long ownerId);
 }

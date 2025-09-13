@@ -4,7 +4,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -20,8 +22,10 @@ import petcare.domain.Pet;
 import petcare.repository.PetRepository;
 import petcare.service.PetQueryService;
 import petcare.service.PetService;
+import petcare.service.UserPetService;
 import petcare.service.criteria.PetCriteria;
 import petcare.service.dto.PetDTO;
+import petcare.service.dto.UserPetDTO;
 import petcare.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -46,11 +50,13 @@ public class PetResource {
     private final PetRepository petRepository;
 
     private final PetQueryService petQueryService;
+    private final UserPetService userPetService;
 
-    public PetResource(PetService petService, PetRepository petRepository, PetQueryService petQueryService) {
+    public PetResource(PetService petService, PetRepository petRepository, PetQueryService petQueryService, UserPetService userPetService) {
         this.petService = petService;
         this.petRepository = petRepository;
         this.petQueryService = petQueryService;
+        this.userPetService = userPetService;
     }
 
     /**
@@ -212,5 +218,32 @@ public class PetResource {
         LOG.debug("REST request to get Pets by ids : {}", ids);
         List<PetDTO> pets = petService.findAllByIds(ids);
         return ResponseEntity.ok(pets);
+    }
+
+    @GetMapping("/count/user/{userId}")
+    public ResponseEntity<Long> countPetsByUserId(@PathVariable Long userId) {
+        LOG.debug("REST request to count Pets by User ID: {}", userId);
+        Long count = petService.countByOwnerId(userId);
+        return ResponseEntity.ok().body(count);
+    }
+
+    @GetMapping("days-since-created/{id}/")
+    public ResponseEntity<Map<String, Object>> getDaysSinceCreated(@PathVariable Long id) {
+        LOG.debug("REST request to get days since account created for UserPet : {}", id);
+
+        Optional<UserPetDTO> userPetOpt = userPetService.findOne(id);
+        if (userPetOpt.isEmpty()) {
+            throw new BadRequestAlertException("Entity not found", "userPet", "idnotfound");
+        }
+
+        UserPetDTO userPet = userPetOpt.get();
+        Instant createdAt = userPet.getCreatedAt();
+        if (createdAt == null) {
+            return ResponseEntity.ok(Map.of("daysSinceCreated", 0));
+        }
+
+        long days = java.time.Duration.between(createdAt, Instant.now()).toDays();
+
+        return ResponseEntity.ok(Map.of("id", id, "daysSinceCreated", days));
     }
 }

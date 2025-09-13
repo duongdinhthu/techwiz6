@@ -106,4 +106,8 @@ public class PetService {
         LOG.debug("Request to get Pets by ids : {}", ids);
         return petRepository.findAllById(ids).stream().map(petMapper::toDto).toList();
     }
+
+    public Long countByOwnerId(Long ownerId) {
+        return petRepository.countByOwnerId(ownerId);
+    }
 }
