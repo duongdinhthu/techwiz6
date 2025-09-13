@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import petcare.domain.Appointment;
+import petcare.domain.enumeration.AppointmentStatus;
 import petcare.repository.AppointmentRepository;
 import petcare.service.dto.AppointmentDTO;
 import petcare.service.mapper.AppointmentMapper;
@@ -105,10 +106,11 @@ public class AppointmentService {
     }
 
     public List<AppointmentDTO> findNextTwoAppointmentsByOwnerId(Long ownerId) {
-        List<Appointment> appointments = appointmentRepository.findByOwnerIdAndApptTimeAfterOrderByApptTimeAsc(
+        List<Appointment> appointments = appointmentRepository.findByOwnerIdAndStatusAndApptTimeAfterOrderByApptTimeAsc(
             ownerId,
+            AppointmentStatus.PENDING,
             Instant.now(),
-            (Pageable) PageRequest.of(0, 2)
+            PageRequest.of(0, 2)
         );
         return appointments.stream().map(appointmentMapper::toDto).toList();
     }
