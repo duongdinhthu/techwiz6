@@ -1,5 +1,6 @@
 package petcare.service;
 
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,5 +95,9 @@ public class AppointmentService {
     public void delete(Long id) {
         LOG.debug("Request to delete Appointment : {}", id);
         appointmentRepository.deleteById(id);
+    }
+
+    public List<AppointmentDTO> findByOwnerId(Long ownerId) {
+        return appointmentMapper.toDto(appointmentRepository.findByOwnerId(ownerId));
     }
 }

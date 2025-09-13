@@ -202,4 +202,11 @@ public class AppointmentResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/owner/{ownerId}")
+    public ResponseEntity<List<AppointmentDTO>> getAppointmentsByOwnerId(@PathVariable Long ownerId) {
+        LOG.debug("REST request to get Appointments by ownerId : {}", ownerId);
+        List<AppointmentDTO> appointments = appointmentService.findByOwnerId(ownerId);
+        return ResponseEntity.ok().body(appointments);
+    }
 }
