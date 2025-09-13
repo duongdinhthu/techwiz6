@@ -1,9 +1,12 @@
 package petcare.service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import petcare.domain.Appointment;
@@ -99,5 +102,14 @@ public class AppointmentService {
 
     public List<AppointmentDTO> findByOwnerId(Long ownerId) {
         return appointmentMapper.toDto(appointmentRepository.findByOwnerId(ownerId));
+    }
+
+    public List<AppointmentDTO> findNextTwoAppointmentsByOwnerId(Long ownerId) {
+        List<Appointment> appointments = appointmentRepository.findByOwnerIdAndApptTimeAfterOrderByApptTimeAsc(
+            ownerId,
+            Instant.now(),
+            (Pageable) PageRequest.of(0, 2)
+        );
+        return appointments.stream().map(appointmentMapper::toDto).toList();
     }
 }

@@ -209,4 +209,11 @@ public class AppointmentResource {
         List<AppointmentDTO> appointments = appointmentService.findByOwnerId(ownerId);
         return ResponseEntity.ok().body(appointments);
     }
+
+    @GetMapping("/next/{ownerId}")
+    public ResponseEntity<List<AppointmentDTO>> getNextTwoAppointments(@PathVariable Long ownerId) {
+        LOG.debug("REST request to get next 2 appointments for ownerId : {}", ownerId);
+        List<AppointmentDTO> result = appointmentService.findNextTwoAppointmentsByOwnerId(ownerId);
+        return ResponseEntity.ok(result);
+    }
 }
