@@ -1,5 +1,6 @@
 package petcare.service;
 
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,5 +95,11 @@ public class DiscoveryService {
     public void delete(Long id) {
         LOG.debug("Request to delete Discovery : {}", id);
         discoveryRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<DiscoveryDTO> findAllByIds(List<Long> ids) {
+        LOG.debug("Request to get Discoveries by ids : {}", ids);
+        return discoveryRepository.findAllById(ids).stream().map(discoveryMapper::toDto).toList();
     }
 }

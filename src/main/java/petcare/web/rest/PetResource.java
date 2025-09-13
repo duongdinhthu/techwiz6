@@ -206,4 +206,11 @@ public class PetResource {
 
         return ResponseEntity.ok().body(pets);
     }
+
+    @GetMapping("ids")
+    public ResponseEntity<List<PetDTO>> getPetsByIds(@RequestParam("ids") List<Long> ids) {
+        LOG.debug("REST request to get Pets by ids : {}", ids);
+        List<PetDTO> pets = petService.findAllByIds(ids);
+        return ResponseEntity.ok(pets);
+    }
 }

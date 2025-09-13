@@ -202,4 +202,11 @@ public class DiscoveryResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("ids")
+    public ResponseEntity<List<DiscoveryDTO>> getDiscoveriesByIds(@RequestParam("ids") List<Long> ids) {
+        LOG.debug("REST request to get Discoveries by ids : {}", ids);
+        List<DiscoveryDTO> discoveries = discoveryService.findAllByIds(ids);
+        return ResponseEntity.ok(discoveries);
+    }
 }

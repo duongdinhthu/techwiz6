@@ -100,4 +100,10 @@ public class PetService {
     public List<PetDTO> findByOwnerId(Long ownerId) {
         return petRepository.findByOwnerId(ownerId).stream().map(petMapper::toDto).toList();
     }
+
+    @Transactional(readOnly = true)
+    public List<PetDTO> findAllByIds(List<Long> ids) {
+        LOG.debug("Request to get Pets by ids : {}", ids);
+        return petRepository.findAllById(ids).stream().map(petMapper::toDto).toList();
+    }
 }
