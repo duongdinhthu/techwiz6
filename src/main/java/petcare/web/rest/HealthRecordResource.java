@@ -203,4 +203,12 @@ public class HealthRecordResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/pet/{petId}")
+    public ResponseEntity<List<HealthRecordDTO>> getByPetId(@PathVariable Long petId) {
+        LOG.debug("REST request to get HealthRecords by petId : {}", petId);
+        List<HealthRecordDTO> records = healthRecordService.findByPetId(petId);
+        return ResponseEntity.ok(records);
+    }
+
 }

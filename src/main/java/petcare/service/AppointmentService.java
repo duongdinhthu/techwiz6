@@ -114,4 +114,20 @@ public class AppointmentService {
         );
         return appointments.stream().map(appointmentMapper::toDto).toList();
     }
+
+    /**
+     * Get all appointments by petId.
+     *
+     * @param petId the petId of the entity.
+     * @return list of appointments.
+     */
+    @Transactional(readOnly = true)
+    public List<AppointmentDTO> findByPetId(Long petId) {
+        LOG.debug("Request to get Appointments by petId : {}", petId);
+        return appointmentRepository.findByPetId(petId)
+            .stream()
+            .map(appointmentMapper::toDto)
+            .toList();
+    }
+
 }

@@ -1,5 +1,6 @@
 package petcare.service;
 
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,4 +96,20 @@ public class HealthRecordService {
         LOG.debug("Request to delete HealthRecord : {}", id);
         healthRecordRepository.deleteById(id);
     }
+
+    /**
+     * Get all healthRecords by petId.
+     *
+     * @param petId the petId of the entity.
+     * @return list of healthRecords.
+     */
+    @Transactional(readOnly = true)
+    public List<HealthRecordDTO> findByPetId(Long petId) {
+        LOG.debug("Request to get HealthRecords by petId : {}", petId);
+        return healthRecordRepository.findByPetId(petId)
+            .stream()
+            .map(healthRecordMapper::toDto)
+            .toList();
+    }
+
 }

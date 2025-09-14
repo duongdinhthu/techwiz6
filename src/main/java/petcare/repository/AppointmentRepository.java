@@ -21,4 +21,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>,
         Instant apptTime,
         Pageable pageable
     );
+    List<Appointment> findByPetId(Long petId);
+
 }
