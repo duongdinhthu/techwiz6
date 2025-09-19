@@ -112,4 +112,8 @@ public class HealthRecordService {
             .toList();
     }
 
+    public Long countByOwnerId(Long ownerId) {
+        return healthRecordRepository.countByOwnerId(ownerId);
+    }
+
 }

@@ -211,4 +211,11 @@ public class HealthRecordResource {
         return ResponseEntity.ok(records);
     }
 
+    @GetMapping("/count/{ownerId}")
+    public ResponseEntity<Long> countByOwner(@PathVariable Long ownerId) {
+        Long total = healthRecordService.countByOwnerId(ownerId);
+        return ResponseEntity.ok(total);
+    }
+
+
 }

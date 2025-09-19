@@ -77,4 +77,40 @@
         <resetJUL>true</resetJUL>
     </contextListener>
 
+  <!-- Ghi tất cả log vào file -->
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>logs/petcare.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- Lưu file hàng ngày -->
+      <fileNamePattern>logs/petcare.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- Console chỉ hiển thị logApplicationStartup của PetCareApp -->
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%msg%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>INFO</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+  </appender>
+
+  <!-- Root logger -->
+  <root level="INFO">
+    <appender-ref ref="FILE" />
+  </root>
+
+  <!-- Chỉ PetCareApp in console -->
+  <logger name="petcare.PetCareApp" level="INFO" additivity="false">
+    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="FILE" />
+  </logger>
+
 </configuration>

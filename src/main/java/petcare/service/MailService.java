@@ -22,7 +22,7 @@ import tech.jhipster.config.JHipsterProperties;
  * <p>
  * We use the {@link Async} annotation to send emails asynchronously.
  */
-@Service
+//@Service
 public class MailService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MailService.class);

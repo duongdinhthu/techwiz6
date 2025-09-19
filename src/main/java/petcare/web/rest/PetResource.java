@@ -227,7 +227,7 @@ public class PetResource {
         return ResponseEntity.ok().body(count);
     }
 
-    @GetMapping("days-since-created/{id}/")
+    @GetMapping("days-since-created/{id}")
     public ResponseEntity<Map<String, Object>> getDaysSinceCreated(@PathVariable Long id) {
         LOG.debug("REST request to get days since account created for UserPet : {}", id);
 
